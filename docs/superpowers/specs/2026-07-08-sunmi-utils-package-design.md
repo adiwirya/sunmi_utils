@@ -31,12 +31,12 @@ sunmi_utils/
 │       ├── sunmi_scanner.dart
 │       └── enums.dart
 ├── android/
-│   ├── build.gradle                  # com.sunmi:printerlibrary:1.0.22
-│   │                                 # com.google.zxing:core:3.3.0
+│   ├── build.gradle                  # com.sunmi:printerlibrary:1.0.22, buildFeatures aidl=true
 │   └── src/main/
-│       ├── kotlin/.../SunmiUtilsPlugin.kt
-│       ├── java/com/sunmi/printerhelper/   # SunmiPrintHelper, BitmapUtil, BytesUtil, ESCUtil, ThreadPoolManager
-│       ├── java/com/sunmi/scannerhelper/   # SunmiScannerHelper
+│       ├── kotlin/com/summarecon/sunmi_utils/
+│       │   ├── SunmiUtilsPlugin.kt   # channels + BroadcastReceiver scanner
+│       │   ├── PrinterHelper.kt      # port SunmiPrintHelper (Kotlin, hanya method yang dipakai channel)
+│       │   └── ScannerHelper.kt      # port SunmiScannerHelper (Kotlin)
 │       └── aidl/com/sunmi/scanner/IScanInterface.aidl
 ├── example/                          # demo app scan & print
 ├── test/                             # unit test Dart (mock channel)
@@ -45,7 +45,7 @@ sunmi_utils/
 
 - **Channel names (namespaced):** `sunmi_utils/method` (MethodChannel) dan `sunmi_utils/scan_events` (EventChannel). Nama lama `sunmi_channel`/`sunmi_event` tidak dipakai — kedua sisi channel pindah bersama ke plugin sehingga tidak ada isu kompatibilitas.
 - **`SunmiUtilsPlugin`** (Kotlin) implement `FlutterPlugin` + `ActivityAware`, memindahkan seluruh logika dari `MainActivity.kt` pos-mobile: method call handler, EventChannel stream handler, dan BroadcastReceiver scanner (actions `com.sunmi.scanner.*`, extraction keys `data`/`code`/`barcode_data`/dst).
-- **Dependency native via Maven:** `com.sunmi:printerlibrary:1.0.22` dan `com.google.zxing:core:3.3.0` (menggantikan `core-3.3.0.jar` yang dibundel di pos-mobile). PayLib tidak diikutkan.
+- **Dependency native via Maven:** hanya `com.sunmi:printerlibrary:1.0.22`. Temuan saat porting: `BitmapUtil`, `BytesUtil`, `ThreadPoolManager`, dan hampir seluruh `ESCUtil` di pos-mobile tidak pernah dipakai oleh jalur channel (hanya demo code) — jadi zxing/`core-3.3.0.jar` **tidak diperlukan** dan tidak diikutkan. Hanya 4 perintah ESC (bold on/off, underline on/off) yang diambil sebagai konstanta byte. Helper ditulis ulang sebagai Kotlin di namespace plugin; AIDL tetap `com.sunmi.scanner.IScanInterface` (kontrak service Sunmi).
 
 ## API Publik Dart
 
