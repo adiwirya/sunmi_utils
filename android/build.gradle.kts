@@ -28,6 +28,10 @@ plugins {
 android {
     namespace = "com.summarecon.sunmi_utils"
 
+    buildFeatures {
+        aidl = true
+    }
+
     compileSdk = 36
 
     compileOptions {
@@ -72,6 +76,7 @@ kotlin {
 }
 
 dependencies {
+    implementation("com.sunmi:printerlibrary:1.0.22")
     testImplementation("org.jetbrains.kotlin:kotlin-test")
     testImplementation("org.mockito:mockito-core:5.0.0")
 }
