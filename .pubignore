@@ -1,3 +1,9 @@
 docs/
 .superpowers/
 .vscode/
+.idea/
+.gradle/
+.dart_tool/
+build/
+pubspec.lock
+*.iml
