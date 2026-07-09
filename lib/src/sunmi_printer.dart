@@ -89,4 +89,65 @@ class SunmiPrinter {
   /// Pushes the paper out to the tear bar (falls back to 3 blank lines on
   /// devices that don't support it).
   static Future<void> feedPaper() => _channel.invokeMethod('FEED_PAPER');
+
+  // ----------------------------------------------------------- barcode & more
+
+  /// Prints a 1D barcode.
+  static Future<void> printBarcode(
+    String data, {
+    SunmiBarcodeType type = SunmiBarcodeType.code128,
+    int height = 100,
+    int width = 2,
+    SunmiBarcodeTextPos textPos = SunmiBarcodeTextPos.textAbove,
+  }) =>
+      _channel.invokeMethod('PRINT_BARCODE', {
+        'data': data,
+        'type': type.value,
+        'height': height,
+        'width': width,
+        'textPos': textPos.value,
+      });
+
+  /// Prints a QR code.
+  static Future<void> printQrCode(
+    String data, {
+    int moduleSize = 12,
+    SunmiQrLevel errorLevel = SunmiQrLevel.h,
+  }) =>
+      _channel.invokeMethod('PRINT_QRCODE', {
+        'data': data,
+        'moduleSize': moduleSize,
+        'errorLevel': errorLevel.value,
+      });
+
+  /// Prints an image from encoded [bytes] (PNG/JPEG). Load assets on the app
+  /// side, e.g. `(await rootBundle.load(path)).buffer.asUint8List()`.
+  static Future<void> printImage(Uint8List bytes) =>
+      _channel.invokeMethod('PRINT_IMAGE', {'bytes': bytes});
+
+  /// Prints one table row described by [columns].
+  static Future<void> printTable(List<SunmiColumn> columns) =>
+      _channel.invokeMethod('PRINT_TABLE', {
+        'texts': columns.map((c) => c.text).toList(),
+        'widths': columns.map((c) => c.width).toList(),
+        'aligns': columns.map((c) => c.align.value).toList(),
+      });
+
+  // -------------------------------------------------------------- transaction
+
+  /// Enters transaction (buffer) mode; content is only printed on
+  /// [commitTransaction] / [endTransaction].
+  static Future<void> startTransaction({bool clear = true}) =>
+      _channel.invokeMethod('START_TRANSACTION', {'clear': clear});
+
+  /// Prints the buffered content and keeps transaction mode active.
+  static Future<void> commitTransaction() =>
+      _channel.invokeMethod('COMMIT_TRANSACTION');
+
+  /// Exits transaction mode, printing remaining buffered content.
+  static Future<void> endTransaction({bool clear = true}) =>
+      _channel.invokeMethod('END_TRANSACTION', {'clear': clear});
+
+  /// Prints a small built-in sample page (useful to verify the printer).
+  static Future<void> testPrint() => _channel.invokeMethod('TEST_PRINT');
 }

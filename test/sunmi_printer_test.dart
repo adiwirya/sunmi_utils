@@ -97,4 +97,79 @@ void main() {
     expect(log[2].arguments, {'lines': 2});
     expect(log[3].method, 'FEED_PAPER');
   });
+
+  test('printBarcode maps enums and passes geometry', () async {
+    await SunmiPrinter.printBarcode('12345678',
+        type: SunmiBarcodeType.code39,
+        height: 80,
+        width: 3,
+        textPos: SunmiBarcodeTextPos.textUnder);
+    expect(log.single.method, 'PRINT_BARCODE');
+    expect(log.single.arguments, {
+      'data': '12345678',
+      'type': 4,
+      'height': 80,
+      'width': 3,
+      'textPos': 2,
+    });
+  });
+
+  test('printBarcode defaults to code128 / textAbove', () async {
+    await SunmiPrinter.printBarcode('X');
+    expect(log.single.arguments, {
+      'data': 'X',
+      'type': 8,
+      'height': 100,
+      'width': 2,
+      'textPos': 1,
+    });
+  });
+
+  test('printQrCode maps error level', () async {
+    await SunmiPrinter.printQrCode('https://example.com',
+        moduleSize: 8, errorLevel: SunmiQrLevel.m);
+    expect(log.single.method, 'PRINT_QRCODE');
+    expect(log.single.arguments, {
+      'data': 'https://example.com',
+      'moduleSize': 8,
+      'errorLevel': 1,
+    });
+  });
+
+  test('printImage passes raw bytes', () async {
+    final bytes = Uint8List.fromList([1, 2, 3]);
+    await SunmiPrinter.printImage(bytes);
+    expect(log.single.method, 'PRINT_IMAGE');
+    expect(log.single.arguments, {'bytes': bytes});
+  });
+
+  test('printTable flattens columns into parallel lists', () async {
+    await SunmiPrinter.printTable(const [
+      SunmiColumn('Item', width: 2),
+      SunmiColumn('Qty', width: 1, align: SunmiAlign.center),
+      SunmiColumn('Price', width: 1, align: SunmiAlign.right),
+    ]);
+    expect(log.single.method, 'PRINT_TABLE');
+    expect(log.single.arguments, {
+      'texts': ['Item', 'Qty', 'Price'],
+      'widths': [2, 1, 1],
+      'aligns': [0, 1, 2],
+    });
+  });
+
+  test('transaction methods', () async {
+    await SunmiPrinter.startTransaction();
+    await SunmiPrinter.commitTransaction();
+    await SunmiPrinter.endTransaction(clear: false);
+    expect(log[0].method, 'START_TRANSACTION');
+    expect(log[0].arguments, {'clear': true});
+    expect(log[1].method, 'COMMIT_TRANSACTION');
+    expect(log[2].method, 'END_TRANSACTION');
+    expect(log[2].arguments, {'clear': false});
+  });
+
+  test('testPrint', () async {
+    await SunmiPrinter.testPrint();
+    expect(log.single.method, 'TEST_PRINT');
+  });
 }
