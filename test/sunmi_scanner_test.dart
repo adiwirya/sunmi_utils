@@ -12,10 +12,10 @@ void main() {
     log.clear();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
-      log.add(call);
-      if (call.method == 'GET_SCANNER_MODEL') return 103;
-      return null;
-    });
+          log.add(call);
+          if (call.method == 'GET_SCANNER_MODEL') return 103;
+          return null;
+        });
   });
 
   tearDown(() {
@@ -48,14 +48,14 @@ void main() {
   test('onBarcodeScanned forwards events from the event channel', () async {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockStreamHandler(
-      const EventChannel('sunmi_utils/scan_events'),
-      MockStreamHandler.inline(
-        onListen: (arguments, events) {
-          events.success('8991234567890');
-          events.endOfStream();
-        },
-      ),
-    );
+          const EventChannel('sunmi_utils/scan_events'),
+          MockStreamHandler.inline(
+            onListen: (arguments, events) {
+              events.success('8991234567890');
+              events.endOfStream();
+            },
+          ),
+        );
     expect(await SunmiScanner.onBarcodeScanned.first, '8991234567890');
   });
 }

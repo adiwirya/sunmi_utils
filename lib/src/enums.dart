@@ -85,10 +85,8 @@ enum SunmiScannerModel {
   final int value;
 
   /// Resolves a raw model code; unknown codes map to [none].
-  static SunmiScannerModel fromValue(int value) => values.firstWhere(
-        (model) => model.value == value,
-        orElse: () => none,
-      );
+  static SunmiScannerModel fromValue(int value) =>
+      values.firstWhere((model) => model.value == value, orElse: () => none);
 }
 
 /// Key event action for [SunmiScanner.sendKeyEvent].
@@ -107,7 +105,11 @@ enum KeyAction {
 
 /// One column of a table row for [SunmiPrinter.printTable].
 class SunmiColumn {
-  const SunmiColumn(this.text, {required this.width, this.align = SunmiAlign.left});
+  const SunmiColumn(
+    this.text, {
+    required this.width,
+    this.align = SunmiAlign.left,
+  });
 
   /// Cell content.
   final String text;

@@ -13,10 +13,7 @@ class SunmiUtilsExampleApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'sunmi_utils example',
-      home: HomePage(),
-    );
+    return const MaterialApp(title: 'sunmi_utils example', home: HomePage());
   }
 }
 
@@ -69,7 +66,8 @@ class _HomePageState extends State<HomePage> {
       final serial = await SunmiPrinter.getSerialNumber();
       final paper = await SunmiPrinter.getPaperSize();
       setState(() {
-        _printerInfo = 'Model: $model\nVersi: $version\nSN: $serial\nKertas: $paper';
+        _printerInfo =
+            'Model: $model\nVersi: $version\nSN: $serial\nKertas: $paper';
       });
     } on PlatformException catch (e) {
       setState(() => _printerInfo = 'Gagal: [${e.code}] ${e.message}');
@@ -161,20 +159,26 @@ class _HomePageState extends State<HomePage> {
                 child: const Text('Test print'),
               ),
               ElevatedButton(
-                onPressed: () =>
-                    _run('Print teks', () => SunmiPrinter.printText('Halo dari sunmi_utils!')),
+                onPressed: () => _run(
+                  'Print teks',
+                  () => SunmiPrinter.printText('Halo dari sunmi_utils!'),
+                ),
                 child: const Text('Print teks'),
               ),
               ElevatedButton(
                 onPressed: () => _run(
                   'Print custom',
-                  () => SunmiPrinter.printCustomText('TEBAL BESAR',
-                      size: SunmiFontSize.lg.value, bold: true),
+                  () => SunmiPrinter.printCustomText(
+                    'TEBAL BESAR',
+                    size: SunmiFontSize.lg.value,
+                    bold: true,
+                  ),
                 ),
                 child: const Text('Print custom'),
               ),
               ElevatedButton(
-                onPressed: () => _run('Print struk contoh', _printSampleReceipt),
+                onPressed: () =>
+                    _run('Print struk contoh', _printSampleReceipt),
                 child: const Text('Struk contoh'),
               ),
             ],

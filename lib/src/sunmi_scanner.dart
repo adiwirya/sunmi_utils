@@ -7,8 +7,9 @@ class SunmiScanner {
   SunmiScanner._();
 
   static const MethodChannel _channel = MethodChannel('sunmi_utils/method');
-  static const EventChannel _eventChannel =
-      EventChannel('sunmi_utils/scan_events');
+  static const EventChannel _eventChannel = EventChannel(
+    'sunmi_utils/scan_events',
+  );
 
   static Stream<String>? _barcodeStream;
 
@@ -27,17 +28,16 @@ class SunmiScanner {
   /// Sends a key event to the scanner service, e.g. to customize the
   /// physical trigger key.
   static Future<void> sendKeyEvent(KeyAction action, int keyCode) =>
-      _channel.invokeMethod(
-        'SEND_KEY_EVENT',
-        {'action': action.value, 'code': keyCode},
-      );
+      _channel.invokeMethod('SEND_KEY_EVENT', {
+        'action': action.value,
+        'code': keyCode,
+      });
 
   /// Broadcast stream of scanned barcodes.
   ///
   /// The native broadcast receiver is only registered while this stream has
   /// listeners. Cancel your subscription when done.
-  static Stream<String> get onBarcodeScanned =>
-      _barcodeStream ??= _eventChannel
-          .receiveBroadcastStream()
-          .map((dynamic event) => event as String);
+  static Stream<String> get onBarcodeScanned => _barcodeStream ??= _eventChannel
+      .receiveBroadcastStream()
+      .map((dynamic event) => event as String);
 }

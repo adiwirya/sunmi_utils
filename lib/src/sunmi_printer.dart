@@ -61,14 +61,13 @@ class SunmiPrinter {
     bool bold = false,
     bool underline = false,
     String? font,
-  }) =>
-      _channel.invokeMethod('PRINT_CUSTOM_TEXT', {
-        'text': text,
-        'size': size,
-        'bold': bold,
-        'underline': underline,
-        'font': font,
-      });
+  }) => _channel.invokeMethod('PRINT_CUSTOM_TEXT', {
+    'text': text,
+    'size': size,
+    'bold': bold,
+    'underline': underline,
+    'font': font,
+  });
 
   // -------------------------------------------------------------------- style
 
@@ -102,26 +101,24 @@ class SunmiPrinter {
     int height = 100,
     int width = 2,
     SunmiBarcodeTextPos textPos = SunmiBarcodeTextPos.textAbove,
-  }) =>
-      _channel.invokeMethod('PRINT_BARCODE', {
-        'data': data,
-        'type': type.value,
-        'height': height,
-        'width': width,
-        'textPos': textPos.value,
-      });
+  }) => _channel.invokeMethod('PRINT_BARCODE', {
+    'data': data,
+    'type': type.value,
+    'height': height,
+    'width': width,
+    'textPos': textPos.value,
+  });
 
   /// Prints a QR code.
   static Future<void> printQrCode(
     String data, {
     int moduleSize = 12,
     SunmiQrLevel errorLevel = SunmiQrLevel.h,
-  }) =>
-      _channel.invokeMethod('PRINT_QRCODE', {
-        'data': data,
-        'moduleSize': moduleSize,
-        'errorLevel': errorLevel.value,
-      });
+  }) => _channel.invokeMethod('PRINT_QRCODE', {
+    'data': data,
+    'moduleSize': moduleSize,
+    'errorLevel': errorLevel.value,
+  });
 
   /// Prints an image from encoded [bytes] (PNG/JPEG). Load assets on the app
   /// side, e.g. `(await rootBundle.load(path)).buffer.asUint8List()`.

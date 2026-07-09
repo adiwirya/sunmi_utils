@@ -12,15 +12,15 @@ void main() {
     log.clear();
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(channel, (call) async {
-      log.add(call);
-      return switch (call.method) {
-        'GET_DEVICE_MODEL' => 'V2s',
-        'GET_PRINTER_VERSION' => '1.05',
-        'GET_SERIAL_NUMBER' => 'SN123',
-        'GET_PAPER_SIZE' => '58mm',
-        _ => null,
-      };
-    });
+          log.add(call);
+          return switch (call.method) {
+            'GET_DEVICE_MODEL' => 'V2s',
+            'GET_PRINTER_VERSION' => '1.05',
+            'GET_SERIAL_NUMBER' => 'SN123',
+            'GET_PAPER_SIZE' => '58mm',
+            _ => null,
+          };
+        });
   });
 
   tearDown(() {
@@ -32,8 +32,11 @@ void main() {
     await SunmiPrinter.bind();
     await SunmiPrinter.unbind();
     await SunmiPrinter.initPrinter();
-    expect(log.map((c) => c.method).toList(),
-        ['BIND_PRINTER', 'UNBIND_PRINTER', 'INIT_PRINTER']);
+    expect(log.map((c) => c.method).toList(), [
+      'BIND_PRINTER',
+      'UNBIND_PRINTER',
+      'INIT_PRINTER',
+    ]);
   });
 
   test('info getters return native values', () async {
@@ -56,7 +59,13 @@ void main() {
   });
 
   test('printCustomText passes all style arguments', () async {
-    await SunmiPrinter.printCustomText('Big', size: 36, bold: true, underline: true, font: 'custom.ttf');
+    await SunmiPrinter.printCustomText(
+      'Big',
+      size: 36,
+      bold: true,
+      underline: true,
+      font: 'custom.ttf',
+    );
     expect(log.single.method, 'PRINT_CUSTOM_TEXT');
     expect(log.single.arguments, {
       'text': 'Big',
@@ -99,11 +108,13 @@ void main() {
   });
 
   test('printBarcode maps enums and passes geometry', () async {
-    await SunmiPrinter.printBarcode('12345678',
-        type: SunmiBarcodeType.code39,
-        height: 80,
-        width: 3,
-        textPos: SunmiBarcodeTextPos.textUnder);
+    await SunmiPrinter.printBarcode(
+      '12345678',
+      type: SunmiBarcodeType.code39,
+      height: 80,
+      width: 3,
+      textPos: SunmiBarcodeTextPos.textUnder,
+    );
     expect(log.single.method, 'PRINT_BARCODE');
     expect(log.single.arguments, {
       'data': '12345678',
@@ -126,8 +137,11 @@ void main() {
   });
 
   test('printQrCode maps error level', () async {
-    await SunmiPrinter.printQrCode('https://example.com',
-        moduleSize: 8, errorLevel: SunmiQrLevel.m);
+    await SunmiPrinter.printQrCode(
+      'https://example.com',
+      moduleSize: 8,
+      errorLevel: SunmiQrLevel.m,
+    );
     expect(log.single.method, 'PRINT_QRCODE');
     expect(log.single.arguments, {
       'data': 'https://example.com',
