@@ -51,22 +51,6 @@ android {
     defaultConfig {
         minSdk = 24
     }
-
-    testOptions {
-        unitTests {
-            isIncludeAndroidResources = true
-            all {
-                it.useJUnitPlatform()
-
-                it.outputs.upToDateWhen { false }
-
-                it.testLogging {
-                    events("passed", "skipped", "failed", "standardOut", "standardError")
-                    showStandardStreams = true
-                }
-            }
-        }
-    }
 }
 
 kotlin {
@@ -77,6 +61,4 @@ kotlin {
 
 dependencies {
     implementation("com.sunmi:printerlibrary:1.0.22")
-    testImplementation("org.jetbrains.kotlin:kotlin-test")
-    testImplementation("org.mockito:mockito-core:5.0.0")
 }

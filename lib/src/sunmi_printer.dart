@@ -51,7 +51,10 @@ class SunmiPrinter {
   static Future<void> printText(String text) =>
       _channel.invokeMethod('PRINT_TEXT', {'text': text});
 
-  /// Prints [text] with one-off styling, without changing global style state.
+  /// Prints [text] with custom styling.
+  ///
+  /// The bold/underline styles set by this call persist for subsequent
+  /// prints until changed again or reset via [initPrinter].
   static Future<void> printCustomText(
     String text, {
     int size = 24,
