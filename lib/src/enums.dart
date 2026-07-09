@@ -105,6 +105,8 @@ enum KeyAction {
 
 /// One column of a table row for [SunmiPrinter.printTable].
 class SunmiColumn {
+  /// Creates a column with [text] content, a relative [width], and an
+  /// optional [align] (defaults to [SunmiAlign.left]).
   const SunmiColumn(
     this.text, {
     required this.width,
