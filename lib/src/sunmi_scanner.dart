@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'enums.dart';
+import 'package:sunmi_utils/src/enums.dart';
 
 /// API for the built-in hardware barcode scanner on Sunmi devices.
 class SunmiScanner {

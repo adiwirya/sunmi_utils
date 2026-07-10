@@ -51,8 +51,9 @@ void main() {
           const EventChannel('sunmi_utils/scan_events'),
           MockStreamHandler.inline(
             onListen: (arguments, events) {
-              events.success('8991234567890');
-              events.endOfStream();
+              events
+                ..success('8991234567890')
+                ..endOfStream();
             },
           ),
         );

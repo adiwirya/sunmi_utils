@@ -1,4 +1,4 @@
-group = "com.summarecon.sunmi_utils"
+group = "com.adiwirya.sunmi_utils"
 version = "1.0-SNAPSHOT"
 
 buildscript {
@@ -26,7 +26,7 @@ plugins {
 }
 
 android {
-    namespace = "com.summarecon.sunmi_utils"
+    namespace = "com.adiwirya.sunmi_utils"
 
     buildFeatures {
         aidl = true

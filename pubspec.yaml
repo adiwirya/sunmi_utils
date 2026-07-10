@@ -1,7 +1,7 @@
 name: sunmi_utils
 description: "Scanner and printer utilities for Sunmi POS devices: barcode scanner stream, and printing text, QR codes, barcodes, tables, and images on the built-in Sunmi printer."
 version: 0.1.0
-repository: https://github.com/summarecon/sunmi_utils
+repository: https://github.com/adiwirya/sunmi_utils
 topics:
   - sunmi
   - printer
@@ -20,11 +20,11 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^6.0.0
+  very_good_analysis: ^10.3.0
 
 flutter:
   plugin:
     platforms:
       android:
-        package: com.summarecon.sunmi_utils
+        package: com.adiwirya.sunmi_utils
         pluginClass: SunmiUtilsPlugin

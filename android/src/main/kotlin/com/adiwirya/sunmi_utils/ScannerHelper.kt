@@ -1,4 +1,4 @@
-package com.summarecon.sunmi_utils
+package com.adiwirya.sunmi_utils
 
 import android.app.Service
 import android.content.ComponentName

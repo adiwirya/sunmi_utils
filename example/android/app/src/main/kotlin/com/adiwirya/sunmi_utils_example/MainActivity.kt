@@ -1,4 +1,4 @@
-package com.summarecon.sunmi_utils_example
+package com.adiwirya.sunmi_utils_example
 
 import io.flutter.embedding.android.FlutterActivity
 

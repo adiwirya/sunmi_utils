@@ -1,6 +1,6 @@
 import 'package:flutter/services.dart';
 
-import 'enums.dart';
+import 'package:sunmi_utils/src/enums.dart';
 
 /// API for the built-in thermal printer on Sunmi devices.
 ///
@@ -81,6 +81,7 @@ class SunmiPrinter {
       _channel.invokeMethod('SET_FONT_SIZE', {'size': size});
 
   /// Enables or disables bold for subsequent prints.
+  // ignore: avoid_positional_boolean_parameters
   static Future<void> setBold(bool bold) =>
       _channel.invokeMethod('SET_BOLD', {'bold': bold});
 

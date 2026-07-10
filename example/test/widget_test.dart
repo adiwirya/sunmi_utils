@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
-  testWidgets('Verify app renders', (WidgetTester tester) async {
+  testWidgets('Verify app renders', (tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(
       const MaterialApp(
