@@ -14,9 +14,13 @@ Uses `com.sunmi:printerlibrary` and the Sunmi scanner service
 | Android (Sunmi devices) | ✅ |
 | iOS / others | ❌ |
 
-Tested on Sunmi V2s. Scanner models reported by `SunmiScanner.getModel()`
-cover P2Lite/V2Pro/P2Pro, L2 Newland, L2 Zebra (SE4710/SE4750/EM1350), and
-L2 Honeywell (N3601/N6603).
+Scanner models reported by `SunmiScanner.getModel()` cover P2Lite/V2Pro/P2Pro,
+L2 Newland, L2 Zebra (SE4710/SE4750/EM1350), and L2 Honeywell (N3601/N6603).
+
+## Tested on device
+
+- Sunmi V2s
+- Sunmi V2 Pro
 
 ## Getting started
 
