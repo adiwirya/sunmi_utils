@@ -74,32 +74,65 @@ class _HomePageState extends State<HomePage> {
     }
   }
 
+  static const _divider = '--------------------------------';
+
   Future<void> _printSampleReceipt() async {
     await SunmiPrinter.startTransaction();
     await SunmiPrinter.setAlignment(SunmiAlign.center);
-    await SunmiPrinter.setBold(true);
-    await SunmiPrinter.printText('SUNMI UTILS DEMO');
-    await SunmiPrinter.setBold(false);
-    await SunmiPrinter.printText('Sample receipt');
+    await SunmiPrinter.printCustomText(
+      'SUNMI UTILS STORE',
+      size: SunmiFontSize.lg.value,
+      bold: true,
+    );
+    await SunmiPrinter.lineWrap(1);
+    await SunmiPrinter.printText('Jl. Contoh No. 123, Jakarta');
     await SunmiPrinter.lineWrap(1);
     await SunmiPrinter.setAlignment(SunmiAlign.left);
+    await SunmiPrinter.printText(_divider);
     await SunmiPrinter.printTable(const [
       SunmiColumn('Item', width: 2),
       SunmiColumn('Qty', width: 1, align: SunmiAlign.center),
       SunmiColumn('Price', width: 1, align: SunmiAlign.right),
     ]);
+    await SunmiPrinter.printText(_divider);
     await SunmiPrinter.printTable(const [
       SunmiColumn('Coffee', width: 2),
       SunmiColumn('2', width: 1, align: SunmiAlign.center),
       SunmiColumn('30k', width: 1, align: SunmiAlign.right),
     ]);
+    await SunmiPrinter.printTable(const [
+      SunmiColumn('Croissant', width: 2),
+      SunmiColumn('1', width: 1, align: SunmiAlign.center),
+      SunmiColumn('25k', width: 1, align: SunmiAlign.right),
+    ]);
+    await SunmiPrinter.printTable(const [
+      SunmiColumn('Latte', width: 2),
+      SunmiColumn('1', width: 1, align: SunmiAlign.center),
+      SunmiColumn('28k', width: 1, align: SunmiAlign.right),
+    ]);
+    await SunmiPrinter.printText(_divider);
+    await SunmiPrinter.setAlignment(SunmiAlign.right);
+    await SunmiPrinter.printCustomText('Total: 83k', bold: true);
     await SunmiPrinter.lineWrap(1);
     await SunmiPrinter.setAlignment(SunmiAlign.center);
-    await SunmiPrinter.printQrCode('https://pub.dev/packages/sunmi_utils');
-    await SunmiPrinter.printBarcode('1234567890');
+    await SunmiPrinter.printText('Thank you for your purchase!');
     await SunmiPrinter.feedPaper();
     await SunmiPrinter.commitTransaction();
     await SunmiPrinter.endTransaction();
+  }
+
+  Future<void> _printSampleQrCode() async {
+    await SunmiPrinter.setAlignment(SunmiAlign.center);
+    await SunmiPrinter.printQrCode('https://pub.dev/packages/sunmi_utils');
+    await SunmiPrinter.commitTransaction();
+    await SunmiPrinter.feedPaper();
+  }
+
+  Future<void> _printSampleBarcode() async {
+    await SunmiPrinter.setAlignment(SunmiAlign.center);
+    await SunmiPrinter.printBarcode('1234567890');
+    await SunmiPrinter.commitTransaction();
+    await SunmiPrinter.feedPaper();
   }
 
   @override
@@ -182,6 +215,14 @@ class _HomePageState extends State<HomePage> {
                 onPressed: () =>
                     _run('Print sample receipt', _printSampleReceipt),
                 child: const Text('Sample receipt'),
+              ),
+              ElevatedButton(
+                onPressed: () => _run('Print QR code', _printSampleQrCode),
+                child: const Text('Print QR'),
+              ),
+              ElevatedButton(
+                onPressed: () => _run('Print barcode', _printSampleBarcode),
+                child: const Text('Print barcode'),
               ),
             ],
           ),
