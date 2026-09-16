@@ -147,7 +147,10 @@ class PrinterHelper {
         s.setAlignment(1, null)
         s.printText("sunmi_utils test print\n", null)
         s.printColumnsString(arrayOf("Item", "Price"), intArrayOf(1, 1), intArrayOf(0, 2), null)
-        s.lineWrap(3, null)
+        // Some firmware queues print jobs until a buffer commit — flush explicitly
+        // instead of relying on lineWrap/autoOutPaper alone.
+        s.commitPrinterBuffer()
+        feedPaper()
     }
 
     companion object {
