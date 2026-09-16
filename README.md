@@ -22,7 +22,7 @@ L2 Honeywell (N3601/N6603).
 
 ```yaml
 dependencies:
-  sunmi_utils: ^0.1.0
+  sunmi_utils: ^1.0.0
 ```
 
 ## Scanner
@@ -63,6 +63,8 @@ await SunmiPrinter.printTable(const [
 
 await SunmiPrinter.printQrCode('https://example.com');
 await SunmiPrinter.printBarcode('1234567890', type: SunmiBarcodeType.code128);
+await SunmiPrinter.commitTransaction(); // flush queued output; some firmware
+                                        // needs this even outside a transaction
 await SunmiPrinter.feedPaper();
 ```
 
