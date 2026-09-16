@@ -1,6 +1,6 @@
 name: sunmi_utils
 description: "Scanner and printer utilities for Sunmi POS devices: barcode scanner stream, and printing text, QR codes, barcodes, tables, and images on the built-in Sunmi printer."
-version: 0.1.0
+version: 1.0.0
 repository: https://github.com/adiwirya/sunmi_utils
 topics:
   - sunmi
